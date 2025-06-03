@@ -37,7 +37,7 @@ def send_to_kafka(transaction, topic='transaction_log'):
 @permission_classes([IsAuthenticated])
 def add_permission(request):
     log_access(request)
-    user_id = request.data.get('user_id')
+    user_id = request.user.id
     folder_path = request.data.get('folder_path')
     access_level = request.data.get('access_level', 'read')
     with sqlite3.connect(DB_PATH) as conn:
@@ -53,7 +53,7 @@ def add_permission(request):
 @permission_classes([IsAuthenticated])
 def remove_permission(request):
     log_access(request)
-    user_id = request.data.get('user_id')
+    user_id = request.user.id
     folder_path = request.data.get('folder_path')
     with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()

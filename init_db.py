@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-DB_PATH = os.path.expanduser('~/data_lake_project/data_warehouse.db')
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data_warehouse.db')
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
@@ -42,16 +42,10 @@ CREATE TABLE IF NOT EXISTS permissions (
 ''')
 
 cursor.execute('''
-INSERT OR IGNORE INTO users (user_id, username, email, last_updated)
-VALUES (1, 'Saad', 'saad.s@example.com', '2025-04-27T16:35:33.000Z'),
-       (2, 'noam', 'noam@example.com', '2025-04-27T16:35:33.000Z')
-''')
-
-folder_path = os.path.expanduser('~/data_lake_project/data_lake/2025-04-27/stream_transaction_log')
-cursor.execute('''
 INSERT OR IGNORE INTO permissions (user_id, folder_path, access_level)
-VALUES (1, ?, 'read')
-''', (folder_path,))
+VALUES (1, '2025-04-27', 'read'),
+       (2, '2025-04-27', 'read')
+''')
 
 conn.commit()
 conn.close()
