@@ -8,9 +8,11 @@ import json
 from datetime import datetime, timedelta
 from collections import defaultdict, Counter
 from kafka import KafkaProducer
-
-DATA_LAKE_PATH = '/Users/saad/Documents/data_integration/data_lake_project/data_lake'
-DB_PATH = os.path.expanduser('~/Documents/data_integration/data_lake_project/data_warehouse.db')
+ 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ 
+DATA_LAKE_PATH = os.path.join(BASE_DIR, 'data_lake')
+DB_PATH = os.path.join(BASE_DIR, 'data_warehouse.db')
 
 def log_access(request):
     if request.user.is_authenticated:
@@ -18,7 +20,7 @@ def log_access(request):
         AccessLog.objects.create(
             user=request.user,
             endpoint=request.path,
-            request_body=request.body.decode('utf-8'),
+            request_body=json.dumps(request.data),
             folder_path=folder_path
         )
 
@@ -83,14 +85,15 @@ def get_data_lake(request):
     abs_folder_path = os.path.join(DATA_LAKE_PATH, folder_path.lstrip('/'))
     data = []
     if os.path.isdir(abs_folder_path):
-        for file in os.listdir(abs_folder_path):
-            if file.endswith('.json'):
-                with open(os.path.join(abs_folder_path, file), 'r') as f:
-                    for line in f:
-                        try:
-                            data.append(json.loads(line))
-                        except Exception:
-                            continue
+        for root, dirs, files in os.walk(abs_folder_path):
+            for file in files:
+                if file.endswith('.json'):
+                    with open(os.path.join(root, file), 'r') as f:
+                        for line in f:
+                            try:
+                                data.append(json.loads(line))
+                            except Exception:
+                                continue
     
     
     payment_method = request.GET.get('payment_method')
