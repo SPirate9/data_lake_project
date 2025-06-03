@@ -173,7 +173,7 @@ Pour tester l’API, importer les requêtes suivantes dans Postman :
 
 ### Version
 
-![Version](./rendu/capture_tp2/version2.png)
+![Version](https://github.com/SPirate9/data_lake_project/blob/main/rendu/capture_tp2/version2.png)
 
 ---
 
