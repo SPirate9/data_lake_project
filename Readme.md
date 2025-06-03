@@ -112,6 +112,10 @@ http://127.0.0.1:8000/admin/
 
 ---
 
+### Swagger
+![Swagger](./rendu/capture_tp2/swagger.png)
+
+---
 ## Utilisation avec Postman
 
 Pour tester l’API, importer les requêtes suivantes dans Postman :  
@@ -167,9 +171,17 @@ Pour tester l’API, importer les requêtes suivantes dans Postman :
 
 ### Réinjection Kafka
 
-![Repush Transaction](./screenshots/repush_transaction.png)
+![Repush Transaction](./rendu/capture_tp2/kafka.png)
 
 ---
+### Réinjection All transaction
+
+![Repush all](./rendu/capture_tp2/alltransactions.png)
+![Confluent](./rendu/capture_tp2/confluent.png)
+
+---
+
+
 
 ### Version
 
